@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id String @id
+  name String
+  email_ciphertext String 
+  email_iv String
+  email_tag String
+  subjects Subject[]
+  timetable Timetable[]
+}
+model Subject{
+id String @id @default(uuid())
+user_id String
+subject_name String
+total_classes Int @default(0)
+attended_classes Int @default(0)
+user User @relation(fields:[user_id],references:[id],onDelete:Cascade)
+@@unique([user_id, subject_name])
+timetables Timetable[]
+attendance Attendance[]
+}
+model Timetable{
+  id String @id @default(uuid())
+  subject_id String
+  user_id String
+  day String
+  start_time String
+  end_time String
+  subject Subject @relation(fields:[subject_id],references:[id],onDelete:Cascade)
+  user User @relation(fields:[user_id],references:[id],onDelete:Cascade)
+}
+model Attendance{
+  id String @id @default(uuid())
+  subject_id String
+  status String
+  date String
+  day String
+ subject Subject @relation(fields:[subject_id],references:[id],onDelete:Cascade)
+}
