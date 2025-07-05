@@ -64,7 +64,7 @@ res.status(500).json({
    }
 }
 const getTimetable=async(req,res)=>{
-    const user_id=req.query.user_id;
+    const {id:user_id}=req.params;
     if(!user_id){
         return res.status(400).json({
             error:"bad request",
@@ -98,7 +98,7 @@ res.status(500).json({
     }
 }
 const deleteTimetable=async(req,res)=>{
-    const user_id=req.query.user_id;
+    const {id:user_id}=req.params;
     if(!user_id){
         return res.status(400).json({
             error:"bad request",

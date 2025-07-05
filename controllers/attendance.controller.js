@@ -65,7 +65,7 @@ res.status(200).json({
 }
 }
 const subjectAttendance=async(req,res)=>{
-    const subject_id=req.query.subject_id;
+    const {id:subject_id}=req.params;
     if(!subject_id){
         return res.status(400).json({
             error:"bad request",

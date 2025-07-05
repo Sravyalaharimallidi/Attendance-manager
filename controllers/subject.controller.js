@@ -26,7 +26,7 @@ res.status(201).json({
     }
 }
 const getAllSubjects=async(req,res)=>{
-    const user_id=req.query.user_id;
+    const {id:user_id}=req.params;
     if(!user_id){
         return res.status(400).json({
             error:"bad request",
@@ -52,7 +52,7 @@ const getAllSubjects=async(req,res)=>{
     }
 }
 const deleteSubject=async(req,res)=>{
-    const id=req.query.id;
+    const id=req.params.id;
         if(!id){
             return res.status(400).json({
                 error:"bad request",
